@@ -1,0 +1,1 @@
+﻿Get-ADUser -identity MeSherut -properties passwordlastset, passwordneverexpires | sort name | ft Name, passwordlastset, Passwordneverexpire

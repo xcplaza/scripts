@@ -1,0 +1,1 @@
+﻿Set-ADSyncPasswordWritebackPermissions -ADConnectorAccountName "ADSyncMSA0fb12" -ADConnectorAccountDomain "eilot.org.il" -Confirm:$false
