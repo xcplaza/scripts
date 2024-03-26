@@ -1,5 +1,5 @@
 =========== Exchange online ============
-Get-ExecutionPolicy
+Get-ExecutionPolicy -List | Format-Table -AutoSize
 Install-Module MSOnline -Force
 Install-Module AzureAD -Force
 Install-Module AzureADPreview -Force
@@ -27,4 +27,3 @@ Get-MessageTrace -RecipientAddress "pds@keystonedental.com" -StartDate "2024-03-
 
 
 Test-NetConnection -Port 444 -ComputerName 185.145.254.249
-https://habr.com/ru/companies/varonis/articles/537028/
