@@ -1,6 +1,4 @@
 #CHECKING PENDING REBOOT
 
-$S = Get-ADComputer -Filter * -properties * | select Name
-ForEach ($Server in $S) {
-Test-PendingReboot -ComputerName $Server -Detailed -SkipConfigurationManagerClientCheck | select ComputerName, IsRebootPending
-}
+$server = Get-ADComputer -Filter * | Where-Object {$_.Name -like "TIC-*"} | Select -Property Name
+Test-PendingReboot -ComputerName $server.Name -Detailed -SkipConfigurationManagerClientCheck | select ComputerName, IsRebootPending
