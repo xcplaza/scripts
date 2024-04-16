@@ -1,0 +1,1 @@
+This important Windows Update troubleshooter is the recommended solution in many Windows support articles, but for some hidden reason Microsoft have made it impossible to obtain.
