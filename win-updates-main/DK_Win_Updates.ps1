@@ -99,12 +99,12 @@ $InstallationResult = $Installer.Install()
 
 #Reboot if needed
 if ($InstallationResult.ResultCode -eq 2){
-Write-Host "Updates installed successfully"
+Write-Host "Updates installed successfully" -foregroundcolor green
                                          } else {
-Write-Host "Some updates could not be installed"
+Write-Host "Some updates could not be installed" -foregroundcolor red
                                          }
 if ($InstallationResult.RebootRequired){
-Write-Host "System needs to reboot"
+Write-Host "System needs to reboot" -foregroundcolor orange
 # uncomment the following line to automatically reboot the system if a reboot is required after the updates are installed
 shutdown -r -f -t 300 -c "Rebooting in 5 minutes to apply Windows updates"
 }
