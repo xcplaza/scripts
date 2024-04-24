@@ -18,13 +18,17 @@ $cpuData = Get-WmiObject Win32_PerfFormattedData_PerfOS_Processor |
            Select-Object -ExpandProperty PercentProcessorTime |
            Measure-Object -Average
 
+clear-host
+Write-host "Check CPU..." -foregroundcolor yellow
+Write-host ""
+
 # Calculate the average CPU usage over the last 5 minutes
 $averageCPU = $cpuData.Average
 
 # Check if average CPU usage exceeds the threshold
 if ($averageCPU -gt $threshold) {
-    Write-Host "CPU overload detected! Average CPU usage over the last 5 minutes: $averageCPU%"
+    Write-Host "Average CPU: $averageCPU%" -ForegroundColor Red
     # You can add additional actions here, like sending an alert or logging the event
 } else {
-    Write-Host "CPU usage within acceptable limits. Average CPU usage over the last 5 minutes: $averageCPU%"
+    Write-Host "Average CPU: $averageCPU%" -ForegroundColor Gree
 }
