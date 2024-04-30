@@ -1,4 +1,4 @@
-# Функция для получения средней нагрузки на память за последние 5 минут
+﻿# Функция для получения средней нагрузки на память за последние 5 минут
 function Get-MemoryUsageAverage {
     $counter = "\Memory\% Committed Bytes In Use"
     $memoryUsage = $null
