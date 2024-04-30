@@ -19,7 +19,12 @@ Write-host $server -foregroundcolor green
     #$server
     foreach ($disk in $disks)
     {
-        $disk.DeviceID + $disk.FreeSpace.ToString("N0") + "GB / " + $disk.Size.ToString("N0") + "GB" + " "
+        $disks = $disk.DeviceID + $disk.FreeSpace.ToString("N0") + " GB / " + $disk.Size.ToString("N0") + " GB"
+        if (($disk.Freespace / $disk.size)*100 -gt 90) {
+        Write-Host "$disks"
+    } else {
+        Write-Host "$disks" -ForegroundColor Red
+    }
 
      }
  }
