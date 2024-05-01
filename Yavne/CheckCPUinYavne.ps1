@@ -2,7 +2,7 @@
 clear-host
 Write-host "Check CPU..." -foregroundcolor yellow
 Write-host ""
-#Enable-PSRemoting -Force
+
 $username = "YAVNED.MUNI\administrator2"
 $password = ConvertTo-SecureString "edr!23@4" -AsPlainText -Force
 $creds = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList($username, $password)
@@ -11,17 +11,9 @@ $servers = @("10.50.50.157", "10.50.50.13", "10.50.50.7", "10.50.50.8", "10.50.5
 
 foreach ($server in $servers) {
     $serverIP = $server
+
     # Define the threshold
     $threshold = 90
-
-    # Get the current time
-    $currentTime = Get-Date
-
-    # Calculate the time 5 minutes ago
-    $startTime = $currentTime.AddMinutes(-5)
-
-    # Define the counter path for CPU usage
-    $counterPath = '\Processor(_Total)\% Processor Time'
 
     # Get the CPU usage data for the last 5 minutes
     $cpuData = Get-WmiObject -ComputerName $serverIP -Credential $creds -Class Win32_PerfFormattedData_PerfOS_Processor |
