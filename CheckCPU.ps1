@@ -30,5 +30,5 @@ if ($averageCPU -gt $threshold) {
     Write-Host "Average CPU: $averageCPU%" -ForegroundColor Red
     # You can add additional actions here, like sending an alert or logging the event
 } else {
-    Write-Host "Average CPU: $averageCPU%" -ForegroundColor Gree
+    Write-Host "Average CPU: $averageCPU%" -ForegroundColor Green
 }
