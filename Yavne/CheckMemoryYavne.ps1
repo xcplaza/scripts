@@ -12,14 +12,16 @@ $servers = @("10.50.50.157", "10.50.50.13", "10.50.50.7", "10.50.50.8", "10.50.5
 foreach ($server in $servers) {
     try {
         $memoryUsage = Get-WmiObject -Class Win32_OperatingSystem -ComputerName $server -Credential $creds |
-            ForEach-Object { [math]::Round(($_.TotalVisibleMemorySize - $_.FreePhysicalMemory) / $_.TotalVisibleMemorySize * 100, 2) }
+        ForEach-Object { [math]::Round(($_.TotalVisibleMemorySize - $_.FreePhysicalMemory) / $_.TotalVisibleMemorySize * 100, 2) }
         
         if ($memoryUsage -gt 85) {
             Write-Host "$($server) - $($memoryUsage)%" -ForegroundColor Red
-        } else {
+        }
+        else {
             Write-Host "$($server) - $($memoryUsage)%" -ForegroundColor Green
         }
-    } catch {
+    }
+    catch {
         Write-Host "Error retrieving memory usage for $($server): $_" -ForegroundColor Yellow
     }
 }
