@@ -1,17 +1,12 @@
 ﻿# Функция для получения средней нагрузки на память за последние 5 минут
 function Get-MemoryUsageAverage {
     $counter = "\Memory\% Committed Bytes In Use"
-    $memoryUsage = $null
+    #$memoryUsage = $null
 
-    # Попытка получить исторические данные о нагрузке на память
-    $memoryUsage = (Get-Counter -Counter $counter -SampleInterval 1 -MaxSamples 300 | 
-                    Select-Object -ExpandProperty CounterSamples | 
-                    Measure-Object -Property CookedValue -Average).Average
-
-    # Если исторические данные недоступны, ожидаем 5 минут и повторяем попытку
+    # Если исторические данные недоступны, ожидаем 10sec и повторяем попытку
     if ($memoryUsage -eq $null) {
-        Start-Sleep -Seconds 10
-        $memoryUsage = (Get-Counter -Counter $counter -SampleInterval 1 -MaxSamples 300 | 
+        #Start-Sleep -Seconds 10
+        $memoryUsage = (Get-Counter -Counter $counter -SampleInterval 1 -MaxSamples 30 | 
                         Select-Object -ExpandProperty CounterSamples | 
                         Measure-Object -Property CookedValue -Average).Average
     }
