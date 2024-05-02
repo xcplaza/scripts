@@ -1,0 +1,2 @@
+﻿#CHECK BACKUP VEEAM
+Get-VBRBackupSession | ?{$_.CreationTime -ge (Get-Date).AddDays(-1)} | Select JobName, JobType, CreationTime, endtime, result, state, @{Name="BackupSize";Expression={$_.BackupStats.BackupSize}} | Sort CreationTime | Format-Table
