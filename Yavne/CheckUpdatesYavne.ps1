@@ -10,22 +10,34 @@ $creds = New-Object -TypeName System.Management.Automation.PSCredential -Argumen
 $servers = @("10.50.50.157")
 #$servers = @("10.50.50.157", "10.50.50.13", "10.50.50.7", "10.50.50.8", "10.50.50.4", "10.50.50.25", "10.50.50.105", "10.50.50.16", "10.50.50.11", "10.50.50.17", "10.50.50.15", "10.50.50.19", "10.50.50.12", "10.50.50.18", "10.50.50.32", "10.50.50.60", "10.50.50.24")
 
-foreach ($server in $servers){
+foreach ($server in $servers) {
     Write-Host "Checking updates for $server"
     try {
-        $session = New-PSSession -ComputerName $server -Credential $creds -ErrorAction Stop
-        $pendingUpdates = Invoke-Command -Session $session -ScriptBlock {
-            (Get-WmiObject -Query "SELECT * FROM Win32_QuickFixEngineering WHERE HotFixID != 'File 1'")
+        # Create a new COM object for Windows Update Agent
+        $updateSession = New-Object -ComObject Microsoft.Update.Session
+
+        # Create a new search object
+        $updateSearcher = $updateSession.CreateUpdateSearcher()
+
+        # Search for pending updates
+        $pendingUpdates = $updateSearcher.Search("IsInstalled=0")
+
+        if ($pendingUpdates.Updates.Count -gt 0) {
+            Write-Host "Pending updates found:"
+            foreach ($update in $pendingUpdates.Updates) {
+                Write-Host "Title: $($update.Title)"
+                Write-Host "Description: $($update.Description)"
+                Write-Host "----------------------"
+            }
         }
-        if ($pendingUpdates) {
-            Write-Host "Pending updates found on $($server):"
-            $pendingUpdates | Select-Object -Property Description
-        } else {
-            Write-Host "No pending updates found on $server."
+        else {
+            Write-Host "No pending updates found."
         }
-    } catch {
+    }
+    catch {
         Write-Host "Failed to establish a session with $($server): $_"
-    } finally {
+    }
+    finally {
         if ($session) {
             Remove-PSSession $session
         }
