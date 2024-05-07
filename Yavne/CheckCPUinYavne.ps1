@@ -1,6 +1,6 @@
 ﻿#GET CPU
 clear-host
-Write-host "Check CPU..." -foregroundcolor yellow
+Write-host "Check CPU Yavne..." -foregroundcolor yellow
 Write-host ""
 
 $username = "YAVNED.MUNI\administrator2"
