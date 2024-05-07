@@ -1,6 +1,6 @@
 ﻿#GET MEMORY
 clear-host
-Write-host "Check Memory..." -foregroundcolor yellow
+Write-host "Check Memory Yavne..." -foregroundcolor yellow
 Write-host ""
 
 $username = "YAVNED.MUNI\administrator2"
