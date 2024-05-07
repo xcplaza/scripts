@@ -1,6 +1,6 @@
 #GET FREE SPACE DISK
 clear-host
-Write-host "Check Disk..." -foregroundcolor yellow
+Write-host "Check Disk Yavne..." -foregroundcolor yellow
 Write-host ""
 
 $username = "YAVNED.MUNI\administrator2"
