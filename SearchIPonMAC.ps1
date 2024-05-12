@@ -1,2 +1,2 @@
 #Search IP on MAC
-arp -a | select-string "90-09-d0-60" |% { $_.ToString().Trim().Split(" ")[0] }
+arp -a | select-string "3c-ef-8c" |% { $_.ToString().Trim().Split(" ")[0] }
