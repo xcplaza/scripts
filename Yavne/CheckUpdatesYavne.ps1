@@ -1,47 +1,53 @@
-#CHECK UPDATES
-clear-host
-Write-host "Check update..." -foregroundcolor yellow
-Write-host ""
+﻿# GET UPDATES
+Clear-Host
+Write-Host "Check updates Yavne..." -ForegroundColor Yellow
+Write-Host ""
 
-$username = "YAVNED.MUNI\administrator2"
-$password = ConvertTo-SecureString "edr!23@4" -AsPlainText -Force
-$creds = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList($username, $password)
-#$servers = @("10.50.50.157", "10.50.50.13", "10.50.50.7", "10.50.50.8", "10.50.50.4", "10.50.50.25", "10.50.50.105", "10.50.50.16", "10.50.50.11", "10.50.50.17", "10.50.50.15", "10.50.50.19", "10.50.50.12", "10.50.50.18", "10.50.50.32", "10.50.50.60", "10.50.50.24")
+$domain = "***"
+$username = "$domain\administrator"
+$password = ConvertTo-SecureString "***" -AsPlainText -Force
+$creds = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $password
 
-# Add the IP address of the remote server to the list of trusted hosts
-Set-Item WSMan:\localhost\Client\TrustedHosts -Value "10.50.50.157" -Force
+$servers = @("YavneSQL-Complot", "YavneSQL", "YavneDC1", "YavneDC2", "yavnedc4", "YavneVeeam", "DC-365", "YavneFS1", "yavneEX16", "yavctxdc1", "yavctxdc2", "YAVCTXSMS", "YavneApp", "YavnePS1", "yavnedc3", "Biyavne", "yavnesysaid")
+$serversWithDomain = $servers | ForEach-Object { "$_.$domain" }
 
-# Retry the script
-$servers = @("10.50.50.157")
+# Проверка обновлений на каждом сервере
+foreach ($server in $serversWithDomain) {
+    $updateScript = {
+        param ($serverName)
 
-foreach ($server in $servers) {
-    Write-Host "Checking updates for $server"
-    try {
-        # Invoke commands directly on the remote computer
-        Invoke-Command -ComputerName $server -Credential $creds -ScriptBlock {
-            # Create a new COM object for Windows Update Agent
-            $updateSession = New-Object -ComObject Microsoft.Update.Session
+        # Получение информации о доступных обновлениях
+        $updateSession = New-Object -ComObject Microsoft.Update.Session
+        $updateSearcher = $updateSession.CreateupdateSearcher()
+        $searchResult = $updateSearcher.Search("Type='Software' and IsHidden=0 and IsInstalled=0")
+        $updates = $searchResult.Updates
 
-            # Create a new search object
-            $updateSearcher = $updateSession.CreateUpdateSearcher()
+        Write-Host "$serverName $($updates.Count) updates found" -ForegroundColor Yellow
+        Write-Host ""
 
-            # Search for pending updates
-            $pendingUpdates = $updateSearcher.Search("IsInstalled=0")
+        if ($updates.Count -gt 0) {
+            foreach ($update in $updates) {
+                $title = $update.Title
+                $kbArticleIDs = $update.KBArticleIDs
+                $securityBulletinIDs = $update.SecurityBulletinIDs
+                $msrcSeverity = $update.MsrcSeverity
+                $lastDeploymentChangeTime = $update.LastDeploymentChangeTime
+                $moreInfoUrls = $update.MoreInfoUrls
 
-            if ($pendingUpdates.Updates.Count -gt 0) {
-                Write-Host "Pending updates found on $($env:COMPUTERNAME):"
-                foreach ($update in $pendingUpdates.Updates) {
-                    Write-Host "Title: $($update.Title)"
-                    Write-Host "Description: $($update.Description)"
-                    Write-Host "----------------------"
-                }
+                Write-Host "--------------------------------------------"
+                Write-Host "Title: $title"
+                if ($kbArticleIDs) { Write-Host "KB #: $kbArticleIDs" }
+                #if ($msrcSeverity) { Write-Host "Rating: $msrcSeverity" }
+                #if ($lastDeploymentChangeTime) { Write-Host "Released: $lastDeploymentChangeTime" }
+                #if ($moreInfoUrls) { Write-Host "More Info: $moreInfoUrls" }
+                Write-Host ""
             }
-            else {
-                Write-Host "No pending updates found on $($env:COMPUTERNAME)."
-            }
+        } else {
+            Write-Host "No Updates Found" -ForegroundColor Yellow
         }
     }
-    catch {
-        Write-Host "Failed to establish a session with $($server): $_"
-    }
+
+    # Выполнение скрипта на удаленном сервере через Invoke-Command
+    Invoke-Command -ComputerName $server -Credential $creds -ScriptBlock $updateScript -ArgumentList $server
 }
+                Write-Host "--------------------------------------------"
