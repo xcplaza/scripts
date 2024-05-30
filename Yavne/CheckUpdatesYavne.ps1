@@ -3,12 +3,12 @@ Clear-Host
 Write-Host "Check updates Yavne..." -ForegroundColor Yellow
 Write-Host ""
 
-$domain = "***"
+$domain = "DOMAIN"
 $username = "$domain\administrator"
 $password = ConvertTo-SecureString "***" -AsPlainText -Force
 $creds = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $password
 
-$servers = @("YavneSQL-Complot", "YavneSQL", "YavneDC1", "YavneDC2", "yavnedc4", "YavneVeeam", "DC-365", "YavneFS1", "yavneEX16", "yavctxdc1", "yavctxdc2", "YAVCTXSMS", "YavneApp", "YavnePS1", "yavnedc3", "Biyavne", "yavnesysaid")
+$servers = @("YavneSQL-Complot", "YavneSQL", "YavneDC1", "YavneDC2", "yavnedc4", "YavneVeeam",  "YavneVeeamSV", "DC-365", "YavneFS1", "yavneEX16", "yavctxdc1", "yavctxdc2", "YAVCTXSMS", "YavneApp", "YavnePS1", "yavnedc3", "Biyavne", "yavnesysaid")
 $serversWithDomain = $servers | ForEach-Object { "$_.$domain" }
 
 # Проверка обновлений на каждом сервере
