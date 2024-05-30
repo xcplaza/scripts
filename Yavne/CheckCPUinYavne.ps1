@@ -3,13 +3,13 @@ clear-host
 Write-host "Check CPU Yavne..." -foregroundcolor yellow
 Write-host ""
 
-$username = "domain\administrator"
+$domain = "DOMAIN"
+$username = "$domain\administrator"
 $password = ConvertTo-SecureString "***" -AsPlainText -Force
 $creds = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList($username, $password)
 
-$domain = ".yavned.muni"
-$servers = @("YavneSQL-Complot", "YavneSQL", "YavneDC1", "YavneDC2", "yavnedc4", "YavneVeeam", "DC-365", "YavneFS1", "yavneEX16", "yavctxdc1", "yavctxdc2", "YAVCTXSMS", "YavneApp", "YavnePS1", "yavnedc3", "Biyavne", "yavnesysaid")
-$serversWithDomain = $servers | ForEach-Object { "$_$domain" }
+$servers = @("YavneSQL-Complot", "YavneSQL", "YavneDC1", "YavneDC2", "yavnedc4", "YavneVeeam", "YavneVeeamSV", "DC-365", "YavneFS1", "yavneEX16", "yavctxdc1", "yavctxdc2", "YAVCTXSMS", "YavneApp", "YavnePS1", "yavnedc3", "Biyavne", "yavnesysaid")
+$serversWithDomain = $servers | ForEach-Object { "$_.$domain" }
 
 foreach ($server in $serversWithDomain) {
     $serverIP = $server
