@@ -6,9 +6,9 @@ Write-Host "Check Backups..." -ForegroundColor Yellow
 Write-Host ""
 
 # Указываем домен и учетные данные
-$domain = "domain"
+$domain = "DOMAIN"
 $username = "$domain\administrator"
-$password = ConvertTo-SecureString "****" -AsPlainText -Force
+$password = ConvertTo-SecureString "***" -AsPlainText -Force
 $creds = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $password
 
 # Список серверов
