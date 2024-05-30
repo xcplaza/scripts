@@ -21,7 +21,8 @@ Foreach ($server in $serversWithDomain) {
     #$server
     foreach ($disk in $disks) {
         $disks = $disk.DeviceID + $disk.FreeSpace.ToString("N0") + " GB / " + $disk.Size.ToString("N0") + " GB"
-        if ((($disk.size - $disk.Freespace) / ($disk.Freespace + $disk.size) / 2) * 100 -gt 90) {
+        $AVGdisk = 100 - (($disk.Freespace * 100) / $disk.size)
+        if ($AVGdisk -gt 90) {
             Write-Host "$disks" -ForegroundColor Red
         }
         else {
