@@ -1,0 +1,3 @@
+﻿Invoke-Expression "curl -o setup.msi 'https://HelpdeskSupport1709819733402.servicedesk.atera.com/GetAgent/Msi/?customerId=15&integratorLogin=support%40impact-networks.co.il&customerName=Fibrotex%20IL&accountId=001Q3000009aspdIAA'"
+Start-Process "msiexec" -ArgumentList "/i setup.msi /qn  IntegratorLogin=support@impact-networks.co.il CompanyId=15 AccountId=001Q3000009aspdIAA" -NoNewWindows - Wait
+Remove-Item "setup.msi"
