@@ -1,7 +1,4 @@
-﻿#Paolo Frigo, https://www.scriptinglibrary.com
-#requires -runasadministrator 
-
-function Create-NewLocalAdmin {
+﻿function Create-NewLocalAdmin {
     [CmdletBinding()]
     param (
         [string] $NewLocalAdmin,
