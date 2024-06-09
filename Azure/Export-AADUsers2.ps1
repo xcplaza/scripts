@@ -1,6 +1,11 @@
 <#
-    .SYNOPSIS
-    Export-AADUsers.ps1
+
+Install-Module Microsoft.Graph -Force
+Install-Module Microsoft.Graph.Beta -AllowClobber -Force
+
+Important: Always install the Microsoft Graph PowerShell and Microsoft Graph Beta PowerShell modules. 
+That’s because some cmdlets are not yet available in the final version, and they will not work. 
+Update both modules to the latest version before you run a cmdlet or script to prevent errors and incorrect results.
 
     .DESCRIPTION
     Export Azure Active Directory users to CSV file.
