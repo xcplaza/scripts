@@ -1,4 +1,5 @@
 ﻿#Get license key
+#VK7JG-NPHTM-C97JM-9MPGT-3V66T
 Clear-Host
 Write-Host "Check license key..." -ForegroundColor Yellow
 Write-Host ""
